@@ -53,7 +53,6 @@ Task("Build")
     }
     .SetConfiguration("Release")
     .WithTarget("Restore;Build")
-    .WithProperty("IncludeSymbols", "true")
     .WithProperty("GenerateLibraryLayout", "true")
     .WithProperty("PackageOutputPath", nupkgDir)
     .WithProperty("PackageVersion", System.Environment.GetEnvironmentVariable("GITVERSION_FullSemVer"))
