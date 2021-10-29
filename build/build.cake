@@ -42,28 +42,7 @@ Task("Restore-NuGet-Packages")
     NuGetRestore(Solution);
 });
 
-Task("Version")
-    .Description("Updates the version information in all Projects")
-    .IsDependentOn("Restore-NuGet-Packages")
-    .Does(() =>
-{
-    Information("\nDownloading NerdBank GitVersioning...");
-    var installSettings = new NuGetInstallSettings {
-        ExcludeVersion  = true,
-        Version = gitVersioningVersion,
-        OutputDirectory = toolsDir
-    };
-    
-    NuGetInstall(new []{"nerdbank.gitversioning"}, installSettings);
-
-    Information("\nRetrieving version...");
-    var results = StartPowershellFile(versionClient);
-    Version = results[1].Properties["NuGetPackageVersion"].Value.ToString();
-    Information("\nBuild Version: " + Version);
-});
-
 Task("Build")
-    .IsDependentOn("Version")
     .Does(() =>
 {
     Information("\nBuilding Solution");
@@ -77,6 +56,7 @@ Task("Build")
     .WithProperty("IncludeSymbols", "true")
     .WithProperty("GenerateLibraryLayout", "true")
     .WithProperty("PackageOutputPath", nupkgDir)
+    .WithProperty("PackageVersion", System.Environment.GetEnvironmentVariable("GITVERSION_FullSemVer"))
     .WithProperty("GeneratePackageOnBuild", "true");
 
     EnsureDirectoryExists(nupkgDir);
