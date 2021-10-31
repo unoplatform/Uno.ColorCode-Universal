@@ -1,11 +1,13 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="MSBuild.Sdk.Extras">
 
-  <PropertyGroup>
-    <TargetFramework>net5.0-windows10.0.18362.0</TargetFramework>
+	<PropertyGroup>
+		<TargetFrameworks>net5.0-windows10.0.18362.0;netstandard2.0;xamarinios10;MonoAndroid10.0;MonoAndroid11.0;xamarinmac20</TargetFrameworks>
     <SupportedOSPlatformVersion>$(TargetPlatformMinVersion)</SupportedOSPlatformVersion>
     <RootNamespace>ColorCode</RootNamespace>
     <AssemblyName>ColorCode.WinUI</AssemblyName>
-    <Title>ColorCode.WinUI</Title>
+		<PackageId>Uno.ColorCode.WinUI</PackageId>
+		<Title>ColorCode.WinUI</Title>
     <Description>Contains the RichTextBlockFormatter, for rendering the Colorized Code to a RichTextBlock.</Description>
     <PackageTags>ColorCode Syntax Highlighting SyntaxHighlighting Formatting UWP RichTextBlock Document InlineCollection</PackageTags>
     <DefineConstants>$(DefineConstants);WINUI</DefineConstants>
@@ -16,7 +18,11 @@
     <Compile Include="..\ColorCode.UWP\RichTextBlockFormatter.cs" Link="RichTextBlockFormatter.cs" />
   </ItemGroup>
 
-  <ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Uno.WinUI" Version="4.0.0-PullRequest-7394-35469-7394" />
+	</ItemGroup>
+
+	<ItemGroup>
     <ProjectReference Include="..\ColorCode.Core\ColorCode.Core.csproj" />
   </ItemGroup>
 
