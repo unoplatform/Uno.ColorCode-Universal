@@ -1,0 +1,28 @@
+<Project>
+
+  <Choose>
+    <When Condition="(!$(TargetFramework.Contains(`uap10.0`)) and '$(TargetFramework)' != 'native' and '$(IsTestProject)' != 'true')">
+      <PropertyGroup>
+        <SignAssembly>true</SignAssembly>
+        <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)ColorCode.snk</AssemblyOriginatorKeyFile>
+      </PropertyGroup>
+    </When>
+  </Choose>
+   
+  <Target Name="AddCommitHashToAssemblyAttributes" BeforeTargets="GetAssemblyAttributes">
+    <ItemGroup>
+      <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute" Condition=" '$(SourceRevisionId)' != '' ">
+        <_Parameter1>CommitHash</_Parameter1>
+        <_Parameter2>$(SourceRevisionId)</_Parameter2>
+      </AssemblyAttribute>
+    </ItemGroup>
+  </Target>
+
+  <!-- Workaround for https://github.com/microsoft/WindowsAppSDK/issues/1217 -->
+  <Target Name="FixReferenceCopyLocalPaths" BeforeTargets="ResolvePackageAssets">
+    <ItemGroup>
+      <ReferenceCopyLocalPaths Remove="$(PkgMicrosoft_WindowsAppSDK)\build\..\runtimes\lib\native\AnyCPU\Microsoft.WindowsAppRuntime.Bootstrap.dll"/>
+    </ItemGroup>
+  </Target>
+
+</Project>

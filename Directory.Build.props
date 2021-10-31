@@ -9,20 +9,55 @@
     <Copyright>Copyright © Microsoft Corporation, William Bradley 2017</Copyright>
     <!-- Project States -->
     <IsUwpProject>$(MSBuildProjectName.Contains('UWP'))</IsUwpProject>
-    <IsAndroidProject>$(MSBuildProjectName.Contains('Android'))</IsAndroidProject>
-    <!-- UWP Config -->
+    <IsWinUIProject>$(MSBuildProjectName.Contains('WinUI'))</IsWinUIProject>
+    <IsTestProject>$(MSBuildProjectName.Contains('Test'))</IsTestProject>
+  </PropertyGroup>
+
+  <!-- UWP Config -->
+  <PropertyGroup Condition="'$(IsUwpProject)' == 'true'">
     <TargetPlatformVersion>10.0.16299.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.14393.0</TargetPlatformMinVersion>
+    <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
+  </PropertyGroup>
+
+  <!-- WinUI Config -->
+  <PropertyGroup Condition="'$(IsWinUIProject)' == 'true'">
+    <TargetPlatformVersion>10.0.18362.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TF_BUILD)' == 'true'">
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
   </PropertyGroup>
 
   <Choose>
-    <When Condition="'$(IsUwpProject)' == 'true' or '$(IsAndroidProject)' == 'true'">
+    <When Condition="'$(SourceLinkEnabled)' != 'false' and '$(IsTestProject)' != 'true'">
       <PropertyGroup>
         <GenerateLibraryLayout>true</GenerateLibraryLayout>
+        <!-- Optional: Publish the repository URL in the built .nupkg (in the NuSpec <Repository> element) -->
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <!-- Optional: Embed source files that are not tracked by the source control manager in the PDB -->
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+        <!-- Optional: Include PDB in the built .nupkg -->
+        <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
       </PropertyGroup>
-      
       <ItemGroup>
-        <PackageReference Include="MSBuild.Sdk.Extras" Version="1.0.9" PrivateAssets="all" />
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
+      </ItemGroup>
+    </When>
+  </Choose>
+  
+  <Choose>
+    <When Condition="'$(IsUwpProject)' == 'true' and '$(IsTestProject)' != 'true'">
+      <ItemGroup>
+        <PackageReference Include="MSBuild.Sdk.Extras" Version="3.0.23" PrivateAssets="all" />
+      </ItemGroup>
+    </When>
+  </Choose>
+
+  <Choose>
+    <When Condition="'$(IsWinUIProject)' == 'true'">
+      <ItemGroup>
+        <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.0.0-preview3" GeneratePathProperty="true" />
       </ItemGroup>
     </When>
   </Choose>

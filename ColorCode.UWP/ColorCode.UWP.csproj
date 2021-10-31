@@ -2,7 +2,7 @@
 <Project Sdk="MSBuild.Sdk.Extras">
 
   <PropertyGroup>
-    <TargetFrameworks>uap10.0;netstandard2.0;xamarinios10;MonoAndroid10.0;MonoAndroid11.0;xamarinmac20</TargetFrameworks>
+    <TargetFrameworks>uap10.0.16299;netstandard2.0;xamarinios10;MonoAndroid10.0;MonoAndroid11.0;xamarinmac20</TargetFrameworks>
     <RootNamespace>ColorCode</RootNamespace>
     <AssemblyName>ColorCode.UWP</AssemblyName>
 		<PackageId>Uno.ColorCode.UWP</PackageId>
@@ -14,7 +14,16 @@
 		<XamarinAndroidSupportSkipVerifyVersions>true</XamarinAndroidSupportSkipVerifyVersions>
 	</PropertyGroup>
 
-	<ItemGroup Condition="'$(TargetFramework)' == 'uap10.0'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+	<ItemGroup Condition="'$(TargetFramework)' == 'uap10.0.16299'">
 		<PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.2.8" />
   </ItemGroup>
 

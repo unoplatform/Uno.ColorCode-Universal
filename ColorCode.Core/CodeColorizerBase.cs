@@ -1,4 +1,6 @@
-﻿using ColorCode.Compilation;
+// Copyright (c) Microsoft Corporation.  All rights reserved.
+
+using ColorCode.Compilation;
 using ColorCode.Parsing;
 using ColorCode.Styling;
 using System.Collections.Generic;
@@ -15,7 +17,7 @@ namespace ColorCode
         public CodeColorizerBase(StyleDictionary Styles, ILanguageParser languageParser)
         {
             this.languageParser = languageParser
-                ?? new LanguageParser(new LanguageCompiler(Languages.CompiledLanguages), Languages.LanguageRepository);
+                ?? new LanguageParser(new LanguageCompiler(Languages.CompiledLanguages, Languages.CompileLock), Languages.LanguageRepository);
 
             this.Styles = Styles ?? StyleDictionary.DefaultLight;
         }
