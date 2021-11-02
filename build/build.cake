@@ -136,9 +136,10 @@ Task("Build")
 		MSBuildPlatform = MSBuildPlatform.x86
     }
     .SetConfiguration("Release")
-    .WithTarget("Pack")
+    .WithTarget("Restore;Build")
     .WithProperty("GenerateLibraryLayout", "true")
     .WithProperty("PackageVersion", System.Environment.GetEnvironmentVariable("GITVERSION_FullSemVer"))
+    .WithProperty("GeneratePackageOnBuild", "true")
     .WithProperty("PackageOutputPath", nupkgDir);
 
     UpdateToolsPath(buildSettings);

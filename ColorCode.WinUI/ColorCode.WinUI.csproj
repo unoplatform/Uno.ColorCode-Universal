@@ -19,7 +19,7 @@
   </ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Uno.WinUI" Version="4.0.0-PullRequest-7394-35469-7394" />
+		<PackageReference Include="Uno.WinUI" Version="4.0.0-dev.5429" />
 	</ItemGroup>
 
 	<ItemGroup>
