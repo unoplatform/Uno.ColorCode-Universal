@@ -2,7 +2,7 @@
 <Project Sdk="MSBuild.Sdk.Extras">
 
 	<PropertyGroup>
-		<TargetFrameworks>net5.0-windows10.0.18362.0;netstandard2.0;xamarinios10;MonoAndroid10.0;MonoAndroid11.0;xamarinmac20</TargetFrameworks>
+		<TargetFrameworks>net5.0-windows10.0.18362.0;netstandard2.0;xamarinios10;MonoAndroid11.0;xamarinmac20;net6.0-ios;net6.0-macos;net6.0-android;net6.0-maccatalyst</TargetFrameworks>
     <SupportedOSPlatformVersion>$(TargetPlatformMinVersion)</SupportedOSPlatformVersion>
     <RootNamespace>ColorCode</RootNamespace>
     <AssemblyName>ColorCode.WinUI</AssemblyName>
@@ -19,7 +19,7 @@
   </ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Uno.WinUI" Version="4.0.0-dev.5429" />
+		<PackageReference Include="Uno.WinUI" Version="4.1.9" />
 	</ItemGroup>
 
 	<ItemGroup>
