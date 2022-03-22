@@ -31,6 +31,9 @@ jobs:
 
   - template: build/ci/dotnet-install-windows.yml
 
+  - powershell: .\build\Install-WindowsSdkISO.ps1 18362
+    displayName: Install Windows SDK 18362
+
   - powershell: .\build\build.ps1
 
   - task: CopyFiles@2
