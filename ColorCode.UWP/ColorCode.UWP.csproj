@@ -1,34 +1,34 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="MSBuild.Sdk.Extras">
 
-  <PropertyGroup>
-    <TargetFrameworks>uap10.0;netstandard2.0;xamarinios10;MonoAndroid10.0;MonoAndroid11.0;xamarinmac20</TargetFrameworks>
-    <RootNamespace>ColorCode</RootNamespace>
-    <AssemblyName>ColorCode.UWP</AssemblyName>
+	<PropertyGroup>
+		<TargetFrameworks>uap10.0;netstandard2.0;xamarinios10;MonoAndroid11.0;xamarinmac20;net6.0-ios;net6.0-macos;net6.0-android;net6.0-maccatalyst</TargetFrameworks>
+		<RootNamespace>ColorCode</RootNamespace>
+		<AssemblyName>ColorCode.UWP</AssemblyName>
 		<PackageId>Uno.ColorCode.UWP</PackageId>
-    <Title>Uno.ColorCode.UWP</Title>
-    <Description>Contains the RichTextBlockFormatter, for rendering the Colorized Code to a RichTextBlock.</Description>
-    <PackageTags>ColorCode Syntax Highlighting SyntaxHighlighting Formatting UWP RichTextBlock Document InlineCollection</PackageTags>
+		<Title>Uno.ColorCode.UWP</Title>
+		<Description>Contains the RichTextBlockFormatter, for rendering the Colorized Code to a RichTextBlock.</Description>
+		<PackageTags>ColorCode Syntax Highlighting SyntaxHighlighting Formatting UWP RichTextBlock Document InlineCollection</PackageTags>
 
 		<!--https://github.com/xamarin/AndroidSupportComponents/issues/176-->
 		<XamarinAndroidSupportSkipVerifyVersions>true</XamarinAndroidSupportSkipVerifyVersions>
 	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DebugType>full</DebugType>
-    <DebugSymbols>true</DebugSymbols>
-  </PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<DebugType>full</DebugType>
+		<DebugSymbols>true</DebugSymbols>
+	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DebugType>full</DebugType>
-    <DebugSymbols>true</DebugSymbols>
-  </PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<DebugType>full</DebugType>
+		<DebugSymbols>true</DebugSymbols>
+	</PropertyGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="Uno.UI" Version="4.0.0-dev.5429" />
+		<PackageReference Include="Uno.UI" Version="4.1.9" />
 	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\ColorCode.Core\ColorCode.Core.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\ColorCode.Core\ColorCode.Core.csproj" />
+	</ItemGroup>
 </Project>

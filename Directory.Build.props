@@ -14,13 +14,13 @@
   </PropertyGroup>
 
   <!-- UWP Config -->
-  <PropertyGroup Condition="'$(IsUwpProject)' == 'true'">
-    <TargetPlatformVersion>10.0.16299.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
+  <PropertyGroup Condition="'$(IsUwpProject)' == 'true' and '$(TargetFramework)'=='uap10.0'">
+    <TargetPlatformVersion>10.0.18362.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
   </PropertyGroup>
 
   <!-- WinUI Config -->
-  <PropertyGroup Condition="'$(IsWinUIProject)' == 'true'">
+  <PropertyGroup Condition="'$(IsWinUIProject)' == 'true' and '$(TargetFramework)'=='uap10.0'">
     <TargetPlatformVersion>10.0.18362.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
   </PropertyGroup>

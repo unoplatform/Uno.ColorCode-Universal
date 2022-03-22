@@ -2,13 +2,13 @@
 <Project Sdk="MSBuild.Sdk.Extras">
 
 	<PropertyGroup>
-		<TargetFrameworks>netstandard1.4;netstandard2.0;xamarinios10;MonoAndroid90;xamarinmac20;uap10.0</TargetFrameworks>
+		<TargetFrameworks>netstandard1.4;netstandard2.0;xamarinios10;MonoAndroid11.0;xamarinmac20;uap10.0;net6.0-ios;net6.0-macos;net6.0-android;net6.0-maccatalyst</TargetFrameworks>
 		<RootNamespace>ColorCode.Core</RootNamespace>
-    <AssemblyName>ColorCode.Core</AssemblyName>
+		<AssemblyName>ColorCode.Core</AssemblyName>
 		<PackageId>Uno.ColorCode.Core</PackageId>
 		<Title>Uno.ColorCode.Core</Title>
-    <Description>The Core Library, containing the Parser, and the classes to create your own formatter.</Description>
-    <PackageTags>ColorCode Syntax Highlighting SyntaxHighlighting Formatting</PackageTags>
-  </PropertyGroup>
-  
+		<Description>The Core Library, containing the Parser, and the classes to create your own formatter.</Description>
+		<PackageTags>ColorCode Syntax Highlighting SyntaxHighlighting Formatting</PackageTags>
+	</PropertyGroup>
+
 </Project>
