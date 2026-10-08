@@ -5,18 +5,11 @@ using ColorCode.Parsing;
 using ColorCode.Styling;
 using Windows.UI.Text;
 using ColorCode.Common;
-#if WINUI
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Documents;
 using ColorCode.WinUI.Common;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Text;
-#else
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Documents;
-using ColorCode.UWP.Common;
-using Windows.UI.Xaml;
-#endif
 
 namespace ColorCode
 {

@@ -10,13 +10,7 @@
 		<Title>ColorCode.WinUI</Title>
     <Description>Contains the RichTextBlockFormatter, for rendering the Colorized Code to a RichTextBlock.</Description>
     <PackageTags>ColorCode Syntax Highlighting SyntaxHighlighting Formatting UWP RichTextBlock Document InlineCollection</PackageTags>
-    <DefineConstants>$(DefineConstants);WINUI</DefineConstants>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Include="..\ColorCode.UWP\Common\ExtensionMethods.cs" Link="Common\ExtensionMethods.cs" />
-    <Compile Include="..\ColorCode.UWP\RichTextBlockFormatter.cs" Link="RichTextBlockFormatter.cs" />
-  </ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Uno.WinUI" Version="4.1.9" />
@@ -24,10 +18,6 @@
 
 	<ItemGroup>
     <ProjectReference Include="..\ColorCode.Core\ColorCode.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Common\" />
   </ItemGroup>
 
 </Project>
