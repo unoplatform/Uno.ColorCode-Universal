@@ -3,7 +3,7 @@ jobs:
 
   pool:
     vmImage: 'windows-2022'
-    
+
   variables:
     NUGET_PACKAGES: $(Agent.WorkFolder)\.nuget
 
@@ -11,11 +11,6 @@ jobs:
   - checkout: self
     clean: true
 
-  - task: NuGetToolInstaller@0
-    inputs:
-      versionSpec: 4.9.1
-      checkLatest: false
-    
   - task: gitversion/setup@0
     retryCountOnTaskFailure: 3
     inputs:
@@ -29,21 +24,19 @@ jobs:
       configFilePath: gitversion.yml
     displayName: Use GitVersion
 
-  - template: build/ci/dotnet-install-windows.yml
-
-  - powershell: .\build\Install-WindowsSdkISO.ps1 18362
-    displayName: Install Windows SDK 18362
-
-  - powershell: .\build\build.ps1
-
-  - task: CopyFiles@2
+  - task: UseDotNet@2
+    displayName: Use .NET 10 SDK
+    retryCountOnTaskFailure: 3
     inputs:
-      SourceFolder: $(build.sourcesdirectory)
-      Contents: '$(build.sourcesdirectory)\build\nupkg\*.nupkg'
-      TargetFolder: $(build.artifactstagingdirectory)
-      CleanTargetFolder: false
-      OverWrite: false
-      flattenFolders: false
+      packageType: sdk
+      version: 10.0.x
+
+  - task: DotNetCoreCLI@2
+    displayName: Build
+    inputs:
+      command: build
+      projects: ColorCode.sln
+      arguments: -c Release -p:GeneratePackageOnBuild=true -p:PackageVersion=$(GitVersion.FullSemVer) -p:PackageOutputPath=$(build.artifactstagingdirectory)
 
   - task: DotNetCoreInstaller@0
     inputs:
