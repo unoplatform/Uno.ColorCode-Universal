@@ -11,6 +11,14 @@ jobs:
   - checkout: self
     clean: true
 
+  # GitVersion 5.6.8 runs on .NET 5, which hosted images no longer ship.
+  - task: UseDotNet@2
+    displayName: Use .NET 5 runtime for GitVersion
+    retryCountOnTaskFailure: 3
+    inputs:
+      packageType: runtime
+      version: 5.0.x
+
   - task: gitversion/setup@0
     retryCountOnTaskFailure: 3
     inputs:
