@@ -1,23 +1,33 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project Sdk="MSBuild.Sdk.Extras">
+<Project Sdk="Uno.Sdk.Private">
 
 	<PropertyGroup>
-		<TargetFrameworks>net5.0-windows10.0.18362.0;netstandard2.0;xamarinios10;MonoAndroid11.0;xamarinmac20;net6.0-ios;net6.0-macos;net6.0-android;net6.0-maccatalyst</TargetFrameworks>
-    <SupportedOSPlatformVersion>$(TargetPlatformMinVersion)</SupportedOSPlatformVersion>
-    <RootNamespace>ColorCode</RootNamespace>
-    <AssemblyName>ColorCode.WinUI</AssemblyName>
+		<!-- Uno 7.0 renders every non-Windows target through the net10.0 (Skia) assembly. -->
+		<TargetFrameworks>net10.0</TargetFrameworks>
+		<TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">$(TargetFrameworks);net10.0-windows10.0.19041</TargetFrameworks>
+		<!-- Uno.Sdk otherwise derives it from GeneratePackageOnBuild, and adds app-only logging packages when false. -->
+		<IsPackable>true</IsPackable>
+		<RootNamespace>ColorCode</RootNamespace>
+		<AssemblyName>ColorCode.WinUI</AssemblyName>
 		<PackageId>Uno.ColorCode.WinUI</PackageId>
 		<Title>ColorCode.WinUI</Title>
-    <Description>Contains the RichTextBlockFormatter, for rendering the Colorized Code to a RichTextBlock.</Description>
-    <PackageTags>ColorCode Syntax Highlighting SyntaxHighlighting Formatting UWP RichTextBlock Document InlineCollection</PackageTags>
-  </PropertyGroup>
+		<Description>Contains the RichTextBlockFormatter, for rendering the Colorized Code to a RichTextBlock.</Description>
+		<PackageTags>ColorCode Syntax Highlighting SyntaxHighlighting Formatting WinUI RichTextBlock Document InlineCollection</PackageTags>
+	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Uno.WinUI" Version="4.1.9" />
+		<ProjectReference Include="..\ColorCode.Core\ColorCode.Core.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-    <ProjectReference Include="..\ColorCode.Core\ColorCode.Core.csproj" />
-  </ItemGroup>
+	<!--
+		Uno.Sdk implies the 'skia' feature and injects the renderer add-ins it brings. The renderer is the app's
+		choice and this library uses none of them, so keep them out of the package dependencies.
+	-->
+	<Target Name="_ColorCodeKeepRendererPackagesPrivate" AfterTargets="UnoImplicitPackages">
+		<ItemGroup>
+			<_ColorCodeRendererPackageReference Include="@(PackageReference)" Condition="'%(Identity)' == 'Uno.WinUI.Composition.Skia' or '%(Identity)' == 'Uno.WinUI.Graphics2DSK' or '%(Identity)' == 'Uno.WinUI.Lottie' or '%(Identity)' == 'SkiaSharp.Views.WinUI'" />
+			<PackageReference Remove="@(_ColorCodeRendererPackageReference)" />
+			<PackageReference Include="@(_ColorCodeRendererPackageReference)" PrivateAssets="all" />
+		</ItemGroup>
+	</Target>
 
 </Project>
