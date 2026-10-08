@@ -8,21 +8,7 @@
     <PackageLicenseUrl>https://github.com/WilliamABradley/ColorCode-Universal/blob/master/LICENSE</PackageLicenseUrl>
     <Copyright>Copyright © Microsoft Corporation, William Bradley 2017</Copyright>
     <!-- Project States -->
-    <IsUwpProject>$(MSBuildProjectName.Contains('UWP'))</IsUwpProject>
-    <IsWinUIProject>$(MSBuildProjectName.Contains('WinUI'))</IsWinUIProject>
     <IsTestProject>$(MSBuildProjectName.Contains('Test'))</IsTestProject>
-  </PropertyGroup>
-
-  <!-- UWP Config -->
-  <PropertyGroup Condition="'$(IsUwpProject)' == 'true' and '$(TargetFramework)'=='uap10.0'">
-    <TargetPlatformVersion>10.0.18362.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
-  </PropertyGroup>
-
-  <!-- WinUI Config -->
-  <PropertyGroup Condition="'$(IsWinUIProject)' == 'true' and '$(TargetFramework)'=='uap10.0'">
-    <TargetPlatformVersion>10.0.18362.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TF_BUILD)' == 'true'">
@@ -40,31 +26,7 @@
         <!-- Optional: Include PDB in the built .nupkg -->
         <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
       </PropertyGroup>
-      <ItemGroup>
-        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
-      </ItemGroup>
+      <!-- Source Link for GitHub ships with the .NET 8+ SDK, no package reference needed. -->
     </When>
   </Choose>
-  
-  <Choose>
-    <When Condition="'$(IsUwpProject)' == 'true' and '$(IsTestProject)' != 'true'">
-      <ItemGroup>
-        <PackageReference Include="MSBuild.Sdk.Extras" Version="3.0.23" PrivateAssets="all" />
-      </ItemGroup>
-    </When>
-  </Choose>
-
-  <Choose>
-    <When Condition="'$(IsWinUIProject)' == 'true' and '$(TargetFramework)'=='net5.0-windows10.0.18362.0'">
-      <ItemGroup>
-        <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.0.0-preview3" GeneratePathProperty="true" />
-      </ItemGroup>
-    </When>
-  </Choose>
-
-  <!--
-	<ItemGroup>
-    <PackageReference Include="Nerdbank.GitVersioning" Version="2.1.23" PrivateAssets="all" />
-  </ItemGroup>
-	-->
 </Project>
