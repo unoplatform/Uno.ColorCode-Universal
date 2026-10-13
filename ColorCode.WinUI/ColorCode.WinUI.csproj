@@ -36,4 +36,14 @@
 		</ItemGroup>
 	</Target>
 
+	<!--
+		This library ships no images, and Uno.Resizetizer's generator would add app-only types to it: a public
+		ColorCode.WindowExtensions.SetWindowIcon and Uno.Resizetizer.__LegacyResizetizerSupport__.
+	-->
+	<Target Name="_ColorCodeRemoveResizetizer" AfterTargets="UnoImplicitPackages">
+		<ItemGroup>
+			<PackageReference Remove="Uno.Resizetizer" />
+		</ItemGroup>
+	</Target>
+
 </Project>
