@@ -20,13 +20,13 @@
 
 	<!--
 		Uno.Sdk implies the 'skia' feature and injects the renderer add-ins it brings. The renderer is the app's
-		choice and this library uses none of them, so keep them out of the package dependencies.
+		choice and this library uses none of them, so drop them. Marking them private is not enough: the XAML
+		generator would still chain the generated GlobalStaticResources into every add-in it is compiled against,
+		and an app without that add-in would fail to load it.
 	-->
-	<Target Name="_ColorCodeKeepRendererPackagesPrivate" AfterTargets="UnoImplicitPackages">
+	<Target Name="_ColorCodeRemoveRendererPackages" AfterTargets="UnoImplicitPackages">
 		<ItemGroup>
-			<_ColorCodeRendererPackageReference Include="@(PackageReference)" Condition="'%(Identity)' == 'Uno.WinUI.Composition.Skia' or '%(Identity)' == 'Uno.WinUI.Graphics2DSK' or '%(Identity)' == 'Uno.WinUI.Lottie' or '%(Identity)' == 'SkiaSharp.Views.WinUI'" />
-			<PackageReference Remove="@(_ColorCodeRendererPackageReference)" />
-			<PackageReference Include="@(_ColorCodeRendererPackageReference)" PrivateAssets="all" />
+			<PackageReference Remove="Uno.WinUI.Composition.Skia;Uno.WinUI.Graphics2DSK" />
 		</ItemGroup>
 	</Target>
 
