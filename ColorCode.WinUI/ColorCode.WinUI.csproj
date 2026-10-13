@@ -12,6 +12,12 @@
 		<Title>ColorCode.WinUI</Title>
 		<Description>Contains the RichTextBlockFormatter, for rendering the Colorized Code to a RichTextBlock.</Description>
 		<PackageTags>ColorCode Syntax Highlighting SyntaxHighlighting Formatting WinUI RichTextBlock Document InlineCollection</PackageTags>
+		<!--
+			The default font is the app's choice. Uno.Sdk otherwise sets OpenSans for every project, and the library
+			gets a module initializer that sets the default font to OpenSans when ColorCode.WinUI loads, which can
+			replace the app's own choice and points at a font file an app without Uno.Fonts.OpenSans does not have.
+		-->
+		<UnoDefaultFont>None</UnoDefaultFont>
 	</PropertyGroup>
 
 	<ItemGroup>
