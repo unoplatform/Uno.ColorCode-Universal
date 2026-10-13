@@ -1,4 +1,4 @@
-<Project Sdk="Uno.Sdk.Private">
+<Project Sdk="Uno.Sdk">
 
 	<PropertyGroup>
 		<!-- Uno 7.0 renders every non-Windows target through the net10.0 (Skia) assembly. -->
