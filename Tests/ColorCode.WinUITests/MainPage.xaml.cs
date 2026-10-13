@@ -84,8 +84,8 @@ namespace ColorCode.WinUITests
 
                     var name = $"{Sanitize(sample.Name)}-{(dark ? "dark" : "light")}";
                     // Not InlineTree.Text: TextBox normalizes the line breaks.
-                    File.WriteAllText(Path.Combine(directory, $"{name}.{platform}.txt"), InlineTreeDump.Dump(PresentationBlock));
-                    await CapturePng(PresentationBlock, Path.Combine(directory, $"{name}.{platform}.png"));
+                    File.WriteAllText(Path.Join(directory, $"{name}.{platform}.txt"), InlineTreeDump.Dump(PresentationBlock));
+                    await CapturePng(PresentationBlock, Path.Join(directory, $"{name}.{platform}.png"));
                 }
             }
         }
