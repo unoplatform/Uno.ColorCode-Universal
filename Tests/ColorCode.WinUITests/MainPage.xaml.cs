@@ -94,6 +94,9 @@ namespace ColorCode.WinUITests
         {
             // Capture the grid region behind the block so the theme background is part of the image.
             var bitmap = new RenderTargetBitmap();
+            // Uno's RenderTargetBitmap holds a native buffer and is IDisposable; the WinAppSDK one is not (null here).
+            using var bitmapDisposable = (object)bitmap as IDisposable;
+
             await bitmap.RenderAsync(MainGrid);
             var pixels = (await bitmap.GetPixelsAsync()).ToArray();
 
