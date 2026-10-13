@@ -1,10 +1,20 @@
 # ColorCode-Universal port for Uno
 
-This port allows for [Uno-based apps](http://platform.uno) to use [ColorCode-Universal](https://github.com/nventive/Uno.ColorCode-Universal) on Windows, iOS, Android and WebAssembly.
+This port allows for [Uno-based apps](http://platform.uno) to use [ColorCode-Universal](https://github.com/nventive/Uno.ColorCode-Universal) on every Uno Platform target.
 
 The following nuget packages are available:
-- [Uno.ColorCode.UWP](https://www.nuget.org/packages/Uno.ColorCode.UWP)
-- [Uno.ColorCode.Core](https://www.nuget.org/packages/Uno.ColorCode.Core)
+
+| Package | Targets |
+| --- | --- |
+| [Uno.ColorCode.WinUI](https://www.nuget.org/packages/Uno.ColorCode.WinUI) | `net10.0` (Uno Platform 7.0), `net10.0-windows10.0.19041` (WinAppSDK) |
+| [Uno.ColorCode.Core](https://www.nuget.org/packages/Uno.ColorCode.Core) | `netstandard2.0` |
+| [Uno.ColorCode.HTML](https://www.nuget.org/packages/Uno.ColorCode.HTML) | `netstandard2.0` |
+
+Starting with 3.0, `Uno.ColorCode.WinUI` requires Uno Platform 7.0. `Uno.ColorCode.UWP` is no longer built, as Uno Platform 7.0 has no UWP (`Windows.UI.Xaml`) flavour; its last release is `2.1.0-uno.36`.
+
+While Uno Platform 7.0 is in development, its packages come from the `uno-dev` feed declared in [nuget.config](./nuget.config).
+
+`Tests/ColorCode.WinUITests` renders every supported sample language on the Skia desktop head and, on Windows, the WinAppSDK head. Set `COLORCODE_SNAPSHOT_DIR` to make it write a screenshot and an inline-tree dump per language and theme, then exit, to compare both heads.
 
 # ColorCode-Universal
 

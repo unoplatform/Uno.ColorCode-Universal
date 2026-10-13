@@ -17,5 +17,8 @@ branches:
     tag: proj-{BranchName}
     regex: projects/(.*?)
     source-branches: ['master']
+  release:
+    # The default release config also matches release/stable/*, which GitVersion then reports as ambiguous.
+    regex: ignore
 ignore:
   sha: []

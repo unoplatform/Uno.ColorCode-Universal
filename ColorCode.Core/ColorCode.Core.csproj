@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project Sdk="MSBuild.Sdk.Extras">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>netstandard1.4;netstandard2.0;xamarinios10;MonoAndroid11.0;xamarinmac20;uap10.0;net6.0-ios;net6.0-macos;net6.0-android;net6.0-maccatalyst</TargetFrameworks>
+		<TargetFramework>netstandard2.0</TargetFramework>
 		<RootNamespace>ColorCode.Core</RootNamespace>
 		<AssemblyName>ColorCode.Core</AssemblyName>
 		<PackageId>Uno.ColorCode.Core</PackageId>
