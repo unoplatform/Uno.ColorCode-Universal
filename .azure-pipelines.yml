@@ -5,7 +5,9 @@ jobs:
     vmImage: 'windows-2022'
 
   variables:
-    NUGET_PACKAGES: $(Agent.WorkFolder)\.nuget
+  - group: uno-codesign-vault
+  - name: NUGET_PACKAGES
+    value: $(Agent.WorkFolder)\.nuget
 
   steps:
   - checkout: self
@@ -46,21 +48,31 @@ jobs:
       projects: ColorCode.sln
       arguments: -c Release -p:GeneratePackageOnBuild=true -p:PackageVersion=$(GitVersion.FullSemVer) -p:PackageOutputPath=$(build.artifactstagingdirectory)
 
-  - task: DotNetCoreInstaller@0
-    inputs:
-      version: '2.1.504'
-
   - task: PowerShell@2
     displayName: Authenticode Sign Packages
     inputs:
       filePath: build/Sign-Package.ps1
     env:
-      SignClientUser: $(SignClientUser)
-      SignClientSecret: $(SignClientSecret)
-      SignPackageName: "Uno.PackageDiff"
-      SignPackageDescription: "Uno.PackageDiff"
+      VaultSignTenantId: $(VaultSignTenantId)
+      VaultSignClientId: $(VaultSignClientId)
+      VaultSignClientSecret: $(VaultSignClientSecret)
+      VaultSignCertificate: $(VaultSignCertificate)
+      VaultSignUrl: $(VaultSignUrl)
+      SignPackageName: "Uno.ColorCode"
+      SignPackageDescription: "Uno.ColorCode"
       ArtifactDirectory: $(build.artifactstagingdirectory)
-    condition: and(succeeded(), not(eq(variables['build.reason'], 'PullRequest')), not(eq(variables['SignClientSecret'], '')), not(eq(variables['SignClientUser'], '')))
+    condition: and(succeeded(), not(eq(variables['build.reason'], 'PullRequest')))
+
+  # Release def 31 pushes every uno build to nuget.org without approval: an unsigned package must fail the build.
+  - pwsh: |
+      $nupkgs = Get-ChildItem "$(build.artifactstagingdirectory)" -Recurse -Filter *.nupkg
+      if (-not $nupkgs) { Write-Error "No packages found"; exit 1 }
+      foreach ($nupkg in $nupkgs) {
+        dotnet nuget verify --all $nupkg.FullName
+        if ($LASTEXITCODE -ne 0) { exit 1 }
+      }
+    displayName: Verify package signatures
+    condition: and(succeeded(), not(eq(variables['build.reason'], 'PullRequest')))
 
   - task: PublishBuildArtifacts@1
     condition: always()

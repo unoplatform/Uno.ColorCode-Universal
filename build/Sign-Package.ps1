@@ -1,27 +1,32 @@
 
-$currentDirectory = split-path $MyInvocation.MyCommand.Definition
-
-# See if we have the ClientSecret available
-if([string]::IsNullOrEmpty($Env:SignClientSecret)){
-	Write-Host "Client Secret not found, not signing packages"
-	return;
+# Signs the packages with the Uno Platform certificate in Azure Key Vault (uno-codesign-vault variable group),
+# like Uno.Wasm.Bootstrap and Uno.XamlBehaviors. Fails instead of skipping: release def 31 pushes uno builds to nuget.org.
+if([string]::IsNullOrEmpty($Env:VaultSignClientSecret)){
+	Write-Error "VaultSignClientSecret is empty: link and authorize the uno-codesign-vault variable group"
+	exit 1
 }
 
-dotnet tool install --tool-path . SignClient
-
-# Setup Variables we need to pass into the sign client tool
-
-$appSettings = "$currentDirectory\SignClientSettings.json"
+dotnet tool install --tool-path . sign --version 0.9.1-beta.25278.1
 
 $nupkgs = gci $Env:ArtifactDirectory\*.nupkg -recurse | Select -ExpandProperty FullName
 
 foreach ($nupkg in $nupkgs){
 	Write-Host "Submitting $nupkg for signing"
 
-	.\SignClient 'sign' -c $appSettings -i $nupkg -r $Env:SignClientUser -s $Env:SignClientSecret -n 'Windows Community Toolkit' -d 'Windows Community Toolkit' -u 'https://developer.microsoft.com/en-us/windows/uwp-community-toolkit' 
-  if ($LASTEXITCODE -ne 0) {
-    exit 1
-  }
+	.\sign code azure-key-vault `
+		$nupkg `
+		--publisher-name "$Env:SignPackageName" `
+		--description "$Env:SignPackageDescription" `
+		--description-url "$Env:build_repository_uri" `
+		--azure-key-vault-tenant-id "$Env:VaultSignTenantId" `
+		--azure-key-vault-client-id "$Env:VaultSignClientId" `
+		--azure-key-vault-client-secret "$Env:VaultSignClientSecret" `
+		--azure-key-vault-certificate "$Env:VaultSignCertificate" `
+		--azure-key-vault-url "$Env:VaultSignUrl" `
+		--verbosity information
+	if ($LASTEXITCODE -ne 0) {
+		exit 1
+	}
 	Write-Host "Finished signing $nupkg"
 }
 
