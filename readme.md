@@ -10,9 +10,7 @@ The following nuget packages are available:
 | [Uno.ColorCode.Core](https://www.nuget.org/packages/Uno.ColorCode.Core) | `netstandard2.0` |
 | [Uno.ColorCode.HTML](https://www.nuget.org/packages/Uno.ColorCode.HTML) | `netstandard2.0` |
 
-Starting with 3.0, `Uno.ColorCode.WinUI` requires Uno Platform 7.0. `Uno.ColorCode.UWP` is no longer built, as Uno Platform 7.0 has no UWP (`Windows.UI.Xaml`) flavour; its last release is `2.1.0-uno.36`.
-
-While Uno Platform 7.0 is in development, its packages come from the `uno-dev` feed declared in [nuget.config](./nuget.config).
+Starting with 3.0, `Uno.ColorCode.WinUI` requires Uno Platform 7.0 (`Uno.WinUI` 7.0.0-dev.2282 or later). `Uno.ColorCode.UWP` is no longer built, as Uno Platform 7.0 has no UWP (`Windows.UI.Xaml`) flavour; its last release is `2.1.0-uno.36`.
 
 `Tests/ColorCode.WinUITests` renders every supported sample language on the Skia desktop head and, on Windows, the WinAppSDK head. Set `COLORCODE_SNAPSHOT_DIR` to make it write a screenshot and an inline-tree dump per language and theme, then exit, to compare both heads.
 
